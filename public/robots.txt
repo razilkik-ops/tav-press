@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://razilkik-ops.github.io/tav-press/sitemap.xml
