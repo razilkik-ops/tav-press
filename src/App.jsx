@@ -27,6 +27,7 @@ import {
 } from "@phosphor-icons/react";
 import { SITE_ORIGIN, serviceByPath, services } from "./serviceData.js";
 import { normalizePath, stripBasePath, withBasePath } from "./pathing.js";
+import { useAdaptiveMotion } from "./useAdaptiveMotion.js";
 
 const APP_BASE_URL = import.meta.env.BASE_URL || "/";
 const siteHref = (path) => withBasePath(path, APP_BASE_URL);
@@ -375,6 +376,7 @@ export function App() {
   const [chatOpen, setChatOpen] = useState(false);
   const [chatSeed, setChatSeed] = useState("");
   usePageMetadata(service, notFound, currentPath);
+  useAdaptiveMotion(currentPath);
 
   const openChat = (message = "") => { setChatSeed(message); setChatOpen(true); };
 

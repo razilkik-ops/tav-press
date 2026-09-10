@@ -1,0 +1,156 @@
+/* Motion never controls content visibility. No scroll handlers or permanent layers. */
+:root {
+  --motion-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.nav a::after {
+  right: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--motion-ease);
+}
+
+.nav a:hover::after,
+.nav a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Keep costly filters and shadows static; animate only small transforms/opacity. */
+.service-card,
+.case-card,
+.deliverable-card,
+.other-services-grid a {
+  transition: border-color 180ms ease, transform 240ms var(--motion-ease);
+}
+
+.service-card:hover,
+.service-card:focus-visible,
+.service-card:focus-within {
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.16);
+}
+
+.deliverable-card:hover { box-shadow: none; }
+
+.service-card img {
+  transition: transform 480ms var(--motion-ease);
+}
+
+.service-card:hover img,
+.service-card:focus-visible img {
+  filter: brightness(.72) saturate(.88);
+  transform: none;
+}
+
+.button:hover,
+.case-card:hover,
+.deliverable-card:hover,
+.other-services-grid a:hover,
+.other-services-grid a:focus-visible {
+  transform: none;
+}
+
+.button > svg,
+.text-link > svg,
+.service-actions a > svg,
+.case-copy button > svg,
+.other-services-grid a > svg,
+.tav-import-chat .chat-toggle {
+  transition: transform 220ms var(--motion-ease);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html[data-motion="full"] :is(.button, .case-card, .deliverable-card, .other-services-grid a):hover {
+    transform: translateY(-2px);
+  }
+
+  html[data-motion="full"] .service-card:is(:hover, :focus-within) img {
+    transform: scale(1.025);
+  }
+
+  html[data-motion="full"] :is(.button, .text-link, .service-actions a, .case-copy button, .other-services-grid a):is(:hover, :focus-visible) > svg {
+    transform: translateX(3px);
+  }
+
+  html[data-motion="full"] .tav-import-chat .chat-toggle:hover {
+    transform: translateY(-2px);
+  }
+}
+
+html[data-motion="full"] :is(.button, .tav-import-chat .chat-toggle):active {
+  transform: scale(.98);
+}
+
+html[data-motion="full"] :is(.request-modal, .tav-import-chat .chat-panel) {
+  animation: panel-enter 240ms var(--motion-ease);
+}
+
+html[data-motion="full"] .tav-import-chat .chat-messages > p:last-child {
+  animation: message-enter 200ms var(--motion-ease);
+}
+
+html[data-motion="full"] .faq-list details[open] > p {
+  animation: soft-enter 220ms ease-out;
+}
+
+/* Touch / constrained devices get short fades, with no backdrop-blur compositing. */
+html[data-motion="lite"] :is(.request-modal, .tav-import-chat .chat-panel) {
+  animation: soft-enter 150ms ease-out;
+}
+
+html[data-motion="lite"] *,
+html[data-motion="lite"] *::before,
+html[data-motion="lite"] *::after {
+  transition-duration: 120ms;
+}
+
+html:is([data-motion="lite"], [data-motion="none"]) .site-header {
+  background: #0a141d;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html:is([data-motion="lite"], [data-motion="none"]) .modal-backdrop {
+  background: rgba(0, 5, 8, .94);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html:is([data-motion="lite"], [data-motion="none"]) .tav-import-chat .typing i {
+  animation: none;
+}
+
+html[data-motion="none"] { scroll-behavior: auto; }
+html[data-motion="none"] *,
+html[data-motion="none"] *::before,
+html[data-motion="none"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+@keyframes panel-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes message-enter {
+  from { opacity: .4; transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes soft-enter {
+  from { opacity: .45; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  html[data-motion="full"] :is(.button, .tav-import-chat .chat-toggle):active {
+    transform: none;
+  }
+}
