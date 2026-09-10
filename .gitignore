@@ -10,5 +10,6 @@ dist/
 AGENTS.md
 audit/
 design-qa.md
+design-qa-assets/
 design-qa-*.png
 implementation-*.png

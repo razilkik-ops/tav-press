@@ -10,6 +10,7 @@ import {
   Factory,
   GearSix,
   Handshake,
+  Headset,
   List,
   MagnifyingGlass,
   MapPin,
@@ -241,7 +242,7 @@ function RequestModal({ service, onClose }) {
 }
 
 function ChatManager({ open, onOpenChange, seed }) {
-  const initial = useMemo(() => [{ from: "manager", text: "Здравствуйте! Я помогу собрать исходные данные для инженера по пресс-формам. Что вы планируете производить?" }], []);
+  const initial = useMemo(() => [{ from: "manager", text: "Здравствуйте! Помогу подобрать пресс-форму и рассчитать производство." }], []);
   const [messages, setMessages] = useState(initial);
   const [text, setText] = useState("");
   const [typing, setTyping] = useState(false);
@@ -250,7 +251,6 @@ function ChatManager({ open, onOpenChange, seed }) {
   const logRef = useRef(null);
   const openButtonRef = useRef(null);
   const lastSeedRef = useRef("");
-  const starterPrompts = ["Нужна новая пресс-форма", "Нужен ремонт оснастки", "Хочу проверить 3D-модель"];
 
   function resizeComposer() {
     const field = textareaRef.current;
@@ -290,27 +290,23 @@ function ChatManager({ open, onOpenChange, seed }) {
   }
 
   return (
-    <>
-      {open && <button className="chat-scrim" aria-label="Закрыть консультанта" onClick={() => setChatOpen(false)} />}
+    <div className="chat-widget tav-import-chat">
       {open && (
-        <aside id="chat-panel" className="chat-panel" role="dialog" aria-modal="false" aria-labelledby="chat-title" aria-describedby="chat-description">
-          <div className="chat-head"><div className="chat-avatar"><ChatCircleDots size={24} weight="fill" /></div><div className="chat-head-copy"><strong id="chat-title">Чат-менеджер</strong><span><i /> инженер на связи</span></div><button onClick={() => setChatOpen(false)} aria-label="Закрыть чат"><X size={22} /></button></div>
-          <p id="chat-description" className="chat-intro">Соберём исходные данные и передадим их инженеру. Точную стоимость и срок подтвердим после технического разбора.</p>
+        <aside id="chat-panel" className="chat-panel" role="dialog" aria-modal="false" aria-labelledby="chat-title">
+          <header><div className="agent-avatar"><Headset size={22} /></div><div><strong id="chat-title">Консультант TAV</strong><span><i /> ИИ-консультант · онлайн</span></div><button onClick={() => setChatOpen(false)} aria-label="Закрыть чат"><X size={22} /></button></header>
           <div ref={logRef} className="chat-messages" role="log" aria-live="polite" aria-relevant="additions">
-            {messages.map((message, index) => <div key={`${message.from}-${index}`} className={message.from === "user" ? "chat-row user-row" : "chat-row"}><span>{message.from === "user" ? "Вы" : "TAV"}</span><p className={message.from === "user" ? "chat-message user-message" : "chat-message"}>{message.text}</p></div>)}
-            {typing && <p className="typing-message" role="status">Менеджер готовит ответ…</p>}
+            {messages.map((message, index) => <p key={`${message.from}-${index}`} className={message.from === "user" ? "user" : "agent"}>{message.text}</p>)}
+            {typing && <p className="agent typing" role="status" aria-label="Консультант готовит ответ"><span>Готовлю ответ</span><b aria-hidden="true"><i /><i /><i /></b></p>}
           </div>
-          {messages.length === 1 && <div className="chat-prompts" aria-label="Быстрые темы">{starterPrompts.map((prompt) => <button key={prompt} type="button" onClick={() => { setText(prompt); textareaRef.current?.focus(); window.setTimeout(resizeComposer, 0); }}>{prompt}</button>)}</div>}
-          <form ref={formRef} className="chat-composer" onSubmit={send}>
+          <form ref={formRef} onSubmit={send}>
             <label className="sr-only" htmlFor="chat-message">Сообщение консультанту</label>
-            <textarea ref={textareaRef} id="chat-message" value={text} onChange={(event) => { setText(event.target.value); resizeComposer(); }} onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); formRef.current?.requestSubmit(); } }} placeholder="Опишите изделие или задачу…" rows="1" />
+            <textarea ref={textareaRef} id="chat-message" value={text} onChange={(event) => { setText(event.target.value); resizeComposer(); }} onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); formRef.current?.requestSubmit(); } }} placeholder="Введите сообщение…" rows="1" />
             <button aria-label="Отправить" disabled={!text.trim() || typing}><PaperPlaneTilt size={21} weight="fill" /></button>
-            <small>Enter — отправить · Shift+Enter — новая строка</small>
           </form>
         </aside>
       )}
-      <button ref={openButtonRef} className={open ? "chat-button chat-button-open" : "chat-button"} onClick={() => setChatOpen(!open)} aria-expanded={open} aria-controls="chat-panel">{open ? <X size={23} /> : <ChatCircleDots size={25} weight="fill" />}<span>{open ? "Свернуть" : "Чат-менеджер"}</span></button>
-    </>
+      <button ref={openButtonRef} className="chat-toggle" onClick={() => setChatOpen(!open)} aria-expanded={open} aria-controls="chat-panel" aria-label={open ? "Закрыть чат-менеджер" : "Открыть чат-менеджер"}>{open ? <X size={23} /> : <ChatCircleDots size={25} weight="fill" />}<span>Чат-менеджер</span></button>
+    </div>
   );
 }
 

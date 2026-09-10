@@ -26,6 +26,285 @@
   --radius-md: 17px;
 }
 
+/* TAV IMPORT chat parity: scoped selectors keep the shared consultant pixel-aligned. */
+.tav-import-chat {
+  position: fixed;
+  z-index: 70;
+  right: 24px;
+  bottom: 22px;
+}
+
+.tav-import-chat .chat-toggle {
+  min-width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #ff5a08, #ff7a00);
+  box-shadow: 0 8px 30px rgba(255, 90, 8, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 18px;
+  color: #fff;
+  font-family: "Roboto Condensed", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tav-import-chat .chat-toggle svg {
+  width: 26px;
+  height: 26px;
+}
+
+.tav-import-chat .chat-panel {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 70px;
+  left: auto;
+  width: 350px;
+  height: 450px;
+  max-height: none;
+  overflow: hidden;
+  border: 1px solid #3a4952;
+  border-radius: 24px;
+  background: #0d1a21;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.tav-import-chat .chat-panel header {
+  flex: 0 0 72px;
+  height: 72px;
+  border-bottom: 1px solid #35434b;
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  gap: 10px;
+}
+
+.tav-import-chat .agent-avatar {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #ff5a08;
+  color: #f4f6f7;
+}
+
+.tav-import-chat .chat-panel header > div:nth-child(2) {
+  flex: 1;
+}
+
+.tav-import-chat .chat-panel header strong {
+  display: block;
+  color: #f4f6f7;
+  font-family: "Roboto Condensed", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: none;
+}
+
+.tav-import-chat .chat-panel header span {
+  display: block;
+  color: #8b989e;
+  font-family: "Roboto Condensed", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.tav-import-chat .chat-panel header span i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 0;
+  border-radius: 50%;
+  background: #52ca79;
+}
+
+.tav-import-chat .chat-panel header button {
+  width: auto;
+  height: auto;
+  padding: 5px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #f4f6f7;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.tav-import-chat .chat-panel header button:hover,
+.tav-import-chat .chat-panel header button:focus-visible {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.tav-import-chat .chat-messages {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overscroll-behavior: contain;
+}
+
+.tav-import-chat .chat-messages p {
+  max-width: 82%;
+  margin: 0;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 18px;
+  color: #f4f6f7;
+  font-family: "Roboto Condensed", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.tav-import-chat .chat-messages .agent {
+  align-self: flex-start;
+  border-top-left-radius: 6px;
+  background: #17262e;
+}
+
+.tav-import-chat .chat-messages .user {
+  align-self: flex-end;
+  border-top-right-radius: 6px;
+  background: #e65008;
+}
+
+.tav-import-chat .chat-messages .typing {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 9px;
+  color: #bdc6ca;
+  white-space: normal;
+}
+
+.tav-import-chat .chat-messages .typing span {
+  font-size: 11px;
+}
+
+.tav-import-chat .chat-messages .typing b {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tav-import-chat .chat-messages .typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #aab5ba;
+  animation: tav-chat-typing 1.15s ease-in-out infinite;
+}
+
+.tav-import-chat .chat-messages .typing i:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.tav-import-chat .chat-messages .typing i:nth-child(3) {
+  animation-delay: 0.28s;
+}
+
+.tav-import-chat .chat-panel form {
+  flex: 0 0 auto;
+  min-height: 57px;
+  border-top: 1px solid #35434b;
+  display: flex;
+  align-items: flex-end;
+}
+
+.tav-import-chat .chat-panel form textarea {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  min-height: 57px;
+  max-height: 124px;
+  margin: 0;
+  padding: 17px 14px 15px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font-family: "Roboto Condensed", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.42;
+  outline: 0;
+  resize: none;
+  overflow-y: auto;
+}
+
+.tav-import-chat .chat-panel form textarea:focus {
+  border: 0;
+  box-shadow: none;
+}
+
+.tav-import-chat .chat-panel form button {
+  width: 54px;
+  height: 57px;
+  flex: 0 0 54px;
+  align-self: flex-end;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #ff5a08;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.tav-import-chat .chat-panel form button svg {
+  width: 22px;
+  height: 22px;
+}
+
+.tav-import-chat .chat-panel form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+
+@keyframes tav-chat-typing {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+@media (max-width: 560px) {
+  .tav-import-chat {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .tav-import-chat .chat-panel {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 82px;
+    width: auto;
+    height: min(520px, calc(100vh - 105px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tav-import-chat .chat-messages .typing i {
+    animation: none;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
