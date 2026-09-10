@@ -3,6 +3,17 @@
   --motion-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
+html {
+  scroll-behavior: auto;
+}
+
+/* A fixed backdrop blur is continuously repainted while scrolling. */
+.site-header {
+  background: rgba(7, 16, 25, .98);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
 .nav a::after {
   right: 0;
   transform: scaleX(0);
@@ -31,14 +42,35 @@
 
 .deliverable-card:hover { box-shadow: none; }
 
-.service-card img {
-  transition: transform 480ms var(--motion-ease);
-}
-
+.service-card img,
 .service-card:hover img,
 .service-card:focus-visible img {
-  filter: brightness(.72) saturate(.88);
+  filter: none;
+  transition: none;
   transform: none;
+}
+
+.service-card .service-shade {
+  background: rgba(2, 8, 12, .48);
+}
+
+.case-image,
+.engineering-image {
+  position: relative;
+}
+
+.case-image::after,
+.engineering-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(3, 9, 14, .14);
+}
+
+.case-image img,
+.engineering-image img {
+  filter: none;
 }
 
 .button:hover,
@@ -59,20 +91,12 @@
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  html[data-motion="full"] :is(.button, .case-card, .deliverable-card, .other-services-grid a):hover {
+  html[data-motion="full"] .button:hover {
     transform: translateY(-2px);
-  }
-
-  html[data-motion="full"] .service-card:is(:hover, :focus-within) img {
-    transform: scale(1.025);
   }
 
   html[data-motion="full"] :is(.button, .text-link, .service-actions a, .case-copy button, .other-services-grid a):is(:hover, :focus-visible) > svg {
     transform: translateX(3px);
-  }
-
-  html[data-motion="full"] .tav-import-chat .chat-toggle:hover {
-    transform: translateY(-2px);
   }
 }
 
@@ -101,12 +125,6 @@ html[data-motion="lite"] *,
 html[data-motion="lite"] *::before,
 html[data-motion="lite"] *::after {
   transition-duration: 120ms;
-}
-
-html:is([data-motion="lite"], [data-motion="none"]) .site-header {
-  background: #0a141d;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
 }
 
 html:is([data-motion="lite"], [data-motion="none"]) .modal-backdrop {
