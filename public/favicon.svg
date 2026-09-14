@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="TAV PRESS FORM">
+  <rect width="64" height="64" rx="14" fill="#071019"/>
+  <path d="M10 14h17v36H10z" fill="#f2f5f6"/>
+  <path d="M37 14h17v36H37z" fill="#f2f5f6"/>
+  <path d="M18 22h9v20h-9l6-6v-8z" fill="#9eabb2"/>
+  <path d="M46 22h-9v20h9l-6-6v-8z" fill="#9eabb2"/>
+  <circle cx="32" cy="32" r="8" fill="#ff5a00"/>
+  <circle cx="32" cy="32" r="3" fill="#071019"/>
+</svg>
